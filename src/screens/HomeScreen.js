@@ -1,38 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Text, StyleSheet, View, ActivityIndicator } from "react-native";
-import axios from "axios";
+import React from "react";
+import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 
-const HomeScreen = () => {
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Fetch a random post from JSONPlaceholder using axios
-    axios.get("https://jsonplaceholder.typicode.com/posts/1")
-      .then(response => {
-        setPost(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error("Error fetching data: ", error);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
-  }
-
+const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      {post ? (
-        <>
-          <Text style={styles.title}>{post.title}</Text>
-          <Text style={styles.body}>{post.body}</Text>
-        </>
-      ) : (
-        <Text style={styles.error}>Error loading post</Text>
-      )}
+      <Text style={styles.welcome}>Welcome to Gybe</Text>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Detail')}>
+        <Text style={styles.buttonText}>Sign On</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -44,17 +19,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
   },
-  title: {
+  welcome: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 20,
   },
-  body: {
-    fontSize: 18,
+  button: {
+    marginTop: 20,
+    padding: 15,
+    backgroundColor: "#007bff",
+    borderRadius: 5,
   },
-  error: {
+  buttonText: {
+    color: "white",
     fontSize: 18,
-    color: "red",
   },
 });
 
